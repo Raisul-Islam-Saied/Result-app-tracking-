@@ -1,0 +1,875 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ARDM NextGen Tracker | Raisul Islam Saied</title>
+        <!-- Primary Meta Tags -->
+    <title>ARDM NextGen Tracker | Live Monitor</title>
+    <meta name="title" content="ARDM NextGen Tracker | Live Monitor">
+    <meta name="description" content="রিয়েল-টাইম রেজাল্ট ট্র্যাকিং, লাইভ টার্মিনাল এবং ডিভাইস ইন্টেলিজেন্স ড্যাশবোর্ড - আবদুর রাজ্জাক দাখিল মাদ্রাসা।">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://আপনার-ওয়েবসাইটের-লিংক.com/">
+    <meta property="og:title" content="ARDM NextGen Tracker | Live Monitor">
+    <meta property="og:description" content="রিয়েল-টাইম রেজাল্ট ট্র্যাকিং, লাইভ টার্মিনাল এবং ডিভাইস ইন্টেলিজেন্স ড্যাশবোর্ড - আবদুর রাজ্জাক দাখিল মাদ্রাসা।">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://আপনার-ওয়েবসাইটের-লিংক.com/">
+    <meta property="twitter:title" content="ARDM NextGen Tracker | Live Monitor">
+    <meta property="twitter:description" content="রিয়েল-টাইম রেজাল্ট ট্র্যাকিং, লাইভ টার্মিনাল এবং ডিভাইস ইন্টেলিজেন্স ড্যাশবোর্ড - আবদুর রাজ্জাক দাখিল মাদ্রাসা।">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap');
+
+        body {
+            font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+            background-color: #050505;
+            color: #e2e8f0;
+            overflow: hidden; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Premium Glassmorphism */
+        .glass {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.9) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 10px 40px 0 rgba(0, 242, 254, 0.1);
+            border-color: rgba(0, 242, 254, 0.2);
+        }
+
+        /* Glowing Text & Elements */
+        .glow-text {
+            background: linear-gradient(to right, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .glow-icon {
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+        }
+
+        /* Custom Scrollbar for inner areas */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.25); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 242, 254, 0.5); }
+
+        /* Animations */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .live-indicator { animation: pulse-ring 2s infinite; }
+
+        .slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Terminal specific */
+        .terminal-container {
+            background: radial-gradient(circle at center, #0f172a 0%, #000000 100%);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+        }
+        .terminal-line { opacity: 0; animation: typeIn 0.3s ease-out forwards; }
+        @keyframes typeIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        /* Bottom Nav styling */
+        .nav-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #64748b;
+        }
+        .nav-item.active {
+            color: #00f2fe;
+            transform: translateY(-5px);
+            text-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+        }
+        .nav-item.active i {
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.8));
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col relative selection:bg-cyan-500/30">
+
+    <!-- Ambient Background Effects -->
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-15%] left-[-10%] w-[60%] h-[60%] bg-blue-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-600/10 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Header (Fixed Top) -->
+    <header class="glass h-[70px] flex items-center justify-between px-5 z-20 sticky top-0">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
+                <i class="fa-solid fa-graduation-cap text-xl text-cyan-400 glow-icon"></i>
+            </div>
+            <div>
+                <h1 class="text-[17px] font-bold tracking-wide text-white">ARDM <span class="glow-text">MONITOR</span></h1>
+                <p class="text-[10px] text-slate-400 font-mono uppercase flex items-center gap-1 mt-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 live-indicator block"></span>
+                    System Online
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span id="syncStatus" class="text-[10px] font-mono text-cyan-400 bg-cyan-900/40 px-2 py-1 rounded-md border border-cyan-500/30 flex items-center gap-1.5 shadow-[0_0_10px_rgba(0,242,254,0.1)]">
+                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> SYNCING
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Scrollable Content Area -->
+    <main class="flex-1 overflow-y-auto pb-28 pt-4 px-2 z-10 scroll-smooth relative" id="mainScrollArea">
+        
+        <!-- ================= VIEW 1: DASHBOARD ================= -->
+        <div id="view-dashboard" class="px-3 space-y-5 hidden slide-up">
+            
+            <!-- Quick Stats Grid -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="glass-card p-4 flex flex-col relative overflow-hidden group">
+                    <div class="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+                        <i class="fa-solid fa-server text-8xl text-cyan-500"></i>
+                    </div>
+                    <span class="text-[11px] text-cyan-400 font-bold mb-1 uppercase tracking-wider">মোট সেশন (Total)</span>
+                    <span class="text-3xl font-black text-white font-mono tracking-tight" id="stat-total">0</span>
+                </div>
+                
+                <div class="glass-card p-4 flex flex-col relative overflow-hidden group">
+                    <div class="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+                        <i class="fa-solid fa-mobile-screen text-8xl text-purple-500"></i>
+                    </div>
+                    <span class="text-[11px] text-purple-400 font-bold mb-1 uppercase tracking-wider">অ্যাকটিভ ডিভাইস</span>
+                    <span class="text-3xl font-black text-white font-mono tracking-tight" id="stat-users">0</span>
+                </div>
+
+                <div class="glass-card p-4 flex flex-col relative overflow-hidden group">
+                    <div class="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+                        <i class="fa-solid fa-bolt text-8xl text-emerald-500"></i>
+                    </div>
+                    <span class="text-[11px] text-emerald-400 font-bold mb-1 uppercase tracking-wider">আজকের রেজাল্ট</span>
+                    <span class="text-3xl font-black text-white font-mono tracking-tight" id="stat-today">0</span>
+                </div>
+
+                <div class="glass-card p-4 flex flex-col relative overflow-hidden group">
+                    <div class="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+                        <i class="fa-solid fa-trophy text-8xl text-amber-500"></i>
+                    </div>
+                    <span class="text-[11px] text-amber-400 font-bold mb-1 uppercase tracking-wider">টপ ক্লাস</span>
+                    <span class="text-2xl font-black text-white font-mono truncate mt-1" id="stat-top-class">-</span>
+                </div>
+            </div>
+
+            <!-- অ্যানালিটিক্স চার্ট -->
+            <div class="glass-card p-5 border-t border-t-white/10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest"><i class="fa-solid fa-chart-pie text-cyan-400 mr-2"></i>ক্লাস ভিত্তিক ব্যবহার</h3>
+                </div>
+                <div class="relative h-48 w-full">
+                    <canvas id="classBarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- মোস্ট সার্চড টার্গেট (Top Classes & Modes) -->
+            <div class="glass-card p-5 border-t border-t-white/10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest"><i class="fa-solid fa-fire text-amber-500 mr-2"></i>সর্বোচ্চ রেজাল্ট তৈরি</h3>
+                </div>
+                <div class="space-y-3" id="topTargetsList">
+                    <div class="text-xs text-slate-500 text-center py-2 font-mono animate-pulse">Processing Data...</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Mini View -->
+            <div class="glass-card p-5 border-t border-t-white/10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest"><i class="fa-solid fa-clock-rotate-left text-purple-400 mr-2"></i>সাম্প্রতিক সেশন</h3>
+                </div>
+                <div class="space-y-3" id="recentActivityList">
+                    <!-- Skeleton Loader -->
+                    <div class="animate-pulse flex space-x-4">
+                        <div class="rounded-xl bg-slate-800 h-10 w-10 border border-slate-700"></div>
+                        <div class="flex-1 space-y-2 py-1">
+                            <div class="h-2 bg-slate-700 rounded w-3/4"></div>
+                            <div class="h-2 bg-slate-800 rounded w-1/2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 2: LIVE TERMINAL ================= -->
+        <div id="view-terminal" class="h-full p-2 hidden slide-up">
+            <div class="glass-card h-[calc(100vh-180px)] flex flex-col overflow-hidden shadow-[0_0_40px_rgba(0,242,254,0.05)] terminal-container rounded-2xl">
+                <div class="bg-black/80 px-4 py-3 flex items-center justify-between border-b border-cyan-500/20 backdrop-blur-md">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-cyan-400 text-xs"></i>
+                        <span class="text-[11px] font-mono text-slate-300">ardm@nexus-core:~/logs</span>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></div>
+                    </div>
+                </div>
+                <div class="flex-1 p-4 overflow-y-auto font-mono text-xs md:text-sm" id="terminalBody" style="scroll-behavior: smooth;">
+                    <div class="text-emerald-500 mb-1">>> System initialized successfully.</div>
+                    <div class="text-cyan-500 mb-4">>> Listening for real-time result generation packets...</div>
+                    <div id="termAnchor"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 3: USER INTEL ================= -->
+        <div id="view-intel" class="px-3 space-y-4 hidden slide-up">
+            <div class="flex justify-between items-center mb-2 px-1">
+                <h2 class="text-lg font-bold text-white">ডিভাইস ট্র্যাকিং</h2>
+                <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2.5 py-1 rounded-md border border-purple-500/20 font-mono shadow-[0_0_10px_rgba(168,85,247,0.1)]" id="intelCount">0 Devices</span>
+            </div>
+            
+            <div class="relative mb-5">
+                <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-cyan-500/50"></i>
+                <input type="text" id="userSearch" placeholder="আইডি দিয়ে সার্চ করুন..." class="w-full bg-slate-900/50 border border-slate-700/50 rounded-xl py-3.5 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-cyan-500/50 focus:bg-slate-900 transition-all placeholder-slate-600 shadow-inner">
+            </div>
+
+            <div class="space-y-3" id="intelList"></div>
+        </div>
+
+        <!-- ================= VIEW 4: ALL LOGS ================= -->
+        <div id="view-logs" class="px-3 hidden slide-up">
+            <div class="flex justify-between items-center mb-5 px-1">
+                <h2 class="text-lg font-bold text-white">সম্পূর্ণ সিস্টেম লগ</h2>
+                <button onclick="fetchData()" class="text-cyan-400 bg-cyan-500/10 w-8 h-8 rounded-lg border border-cyan-500/20 flex items-center justify-center hover:bg-cyan-500/20 transition-colors">
+                    <i class="fa-solid fa-rotate-right text-xs"></i>
+                </button>
+            </div>
+            <div class="space-y-3" id="allLogsList"></div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="glass h-[70px] fixed bottom-0 w-full z-30 flex justify-around items-center px-2 pb-safe border-t border-slate-800">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active flex flex-col items-center justify-center w-16 h-full gap-1">
+            <i class="fa-solid fa-chart-line text-[22px]"></i>
+            <span class="text-[10px] font-bold tracking-wide">ড্যাশবোর্ড</span>
+        </button>
+        <button onclick="switchTab('terminal')" id="nav-terminal" class="nav-item flex flex-col items-center justify-center w-16 h-full gap-1 relative">
+            <i class="fa-solid fa-terminal text-[20px]"></i>
+            <span class="text-[10px] font-bold tracking-wide">টার্মিনাল</span>
+            <span class="absolute top-2.5 right-2 w-2 h-2 bg-emerald-500 rounded-full live-indicator"></span>
+        </button>
+        <button onclick="switchTab('intel')" id="nav-intel" class="nav-item flex flex-col items-center justify-center w-16 h-full gap-1">
+            <i class="fa-solid fa-microchip text-[22px]"></i>
+            <span class="text-[10px] font-bold tracking-wide">ডিভাইস</span>
+        </button>
+        <button onclick="switchTab('logs')" id="nav-logs" class="nav-item flex flex-col items-center justify-center w-16 h-full gap-1">
+            <i class="fa-solid fa-list-check text-[22px]"></i>
+            <span class="text-[10px] font-bold tracking-wide">লগস</span>
+        </button>
+    </nav>
+
+    <!-- Modal for User Intelligence -->
+    <div id="intelModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-900 w-full sm:w-[90%] sm:max-w-md h-[85vh] sm:h-[70vh] rounded-t-[2rem] sm:rounded-3xl border border-slate-700 shadow-2xl flex flex-col transform translate-y-full sm:translate-y-0 transition-transform duration-400 ease-out" id="intelModalContent">
+            
+            <div class="p-5 border-b border-white/5 flex justify-between items-start relative bg-slate-900/80 backdrop-blur-md rounded-t-[2rem] sm:rounded-t-3xl z-10">
+                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 w-12 h-1.5 bg-slate-700 rounded-full sm:hidden"></div>
+                <div class="mt-2">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen text-cyan-500"></i>
+                        ডিভাইস হিস্ট্রি
+                    </h3>
+                    <p class="text-xs font-mono text-cyan-400 bg-cyan-500/10 inline-block px-2 py-0.5 rounded mt-1.5 border border-cyan-500/20" id="modalUserId">ID: 123456</p>
+                </div>
+                <button onclick="closeIntelModal()" class="w-8 h-8 mt-2 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 flex-1 overflow-y-auto bg-slate-950/50">
+                <div class="text-[10px] text-slate-500 mb-4 uppercase tracking-widest font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-timeline"></i> অ্যাক্টিভিটি টাইমলাইন
+                </div>
+                
+                <div class="space-y-4 relative before:absolute before:inset-0 before:ml-[11px] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-cyan-500/50 before:via-purple-500/30 before:to-transparent" id="modalTargetsList">
+                    <!-- Logs will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initialization Overlay -->
+    <div id="initOverlay" class="fixed inset-0 z-[200] bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="relative w-24 h-24 flex items-center justify-center mb-6">
+            <div class="absolute inset-0 border-4 border-cyan-500/20 rounded-full animate-[spin_3s_linear_infinite]"></div>
+            <div class="absolute inset-2 border-4 border-t-cyan-500 border-r-transparent border-b-purple-500 border-l-transparent rounded-full animate-[spin_1.5s_linear_infinite_reverse]"></div>
+            <i class="fa-solid fa-shield-halved text-3xl text-cyan-400 glow-icon"></i>
+        </div>
+        <div class="text-white font-mono tracking-[0.2em] text-sm mb-3 glow-text font-bold">NEXUS SECURE LINK</div>
+        <div class="w-48 h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+            <div class="h-full bg-gradient-to-r from-cyan-500 to-purple-500 w-1/2 animate-[ping_1.5s_infinite]"></div>
+        </div>
+    </div>
+
+    <script>
+        /* ================= Configuration & State ================= */
+        // আপনার ট্র্যাকিং গুগল শিটের Web App URL এখানে বসান
+        const API_URL = "https://script.google.com/macros/s/AKfycbxyimh9rBsBo48sZ7SmawQCwJhzGHWXiYzHxrcZ8bQqc5mWQ9xariITHnxldQVH_dxs/exec"; // <--- ⚠️ পরিবর্তন করুন 
+        
+        let globalLogs = [];
+        let previousTotal = 0;
+        let isFirstLoad = true;
+        let pollingInterval = null;
+        let intelDataMap = {};
+        
+        // Chart Instance
+        let dashboardChart = null;
+
+        /* ================= Helper Functions ================= */
+        function timeAgo(dateString) {
+            if (!dateString) return 'Just now';
+            const date = new Date(dateString);
+            if(isNaN(date)) return 'Just now'; 
+            
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            
+            let interval = seconds / 31536000;
+            if (interval > 1) return Math.floor(interval) + "y";
+            interval = seconds / 2592000;
+            if (interval > 1) return Math.floor(interval) + "m";
+            interval = seconds / 86400;
+            if (interval > 1) return Math.floor(interval) + "d";
+            interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + "h";
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + "m";
+            return "Now";
+        }
+
+        function formatDateReadable(dateString) {
+            if (!dateString) return '-';
+            const d = new Date(dateString);
+            if(isNaN(d)) return dateString; 
+            return d.toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit', hour12: true });
+        }
+
+        /* ================= Boot Sequence ================= */
+        window.onload = () => {
+            switchTab('dashboard'); 
+            fetchData();
+            // প্রতি ৮ সেকেন্ড পর পর নতুন ডাটা চেক করবে
+            pollingInterval = setInterval(fetchData, 8000); 
+        };
+
+        /* ================= Data Fetching logic ================= */
+        async function fetchData() {
+            if(API_URL === "আপনার_WEB_APP_URL_এখানে_দিন") {
+                console.warn("API URL Setup required.");
+                document.getElementById('syncStatus').innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> NO API";
+                document.getElementById('syncStatus').className = "text-[10px] font-mono text-rose-400 bg-rose-900/40 px-2 py-1 rounded-md border border-rose-500/30 flex items-center gap-1.5";
+                setTimeout(() => document.getElementById('initOverlay').style.display = 'none', 1000);
+                return;
+            }
+
+            const statusEl = document.getElementById('syncStatus');
+            statusEl.innerHTML = `<i class="fa-solid fa-rotate animate-spin text-[8px]"></i> SYNCING`;
+            statusEl.className = "text-[10px] font-mono text-amber-400 bg-amber-900/40 px-2 py-1 rounded-md border border-amber-500/30 flex items-center gap-1.5";
+
+            try {
+                // doGet রিকোয়েস্ট (আপনার আগের সেটআপ অনুযায়ী)
+                const response = await fetch(API_URL);
+                const result = await response.json();
+
+                if (result.status === "success" && result.data) {
+                    processData(result.data);
+                    
+                    statusEl.innerHTML = `<i class="fa-solid fa-wifi text-[8px]"></i> LIVE`;
+                    statusEl.className = "text-[10px] font-mono text-emerald-400 bg-emerald-900/40 px-2 py-1 rounded-md border border-emerald-500/30 flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
+                    
+                    if(isFirstLoad) {
+                        setTimeout(() => {
+                            document.getElementById('initOverlay').style.opacity = '0';
+                            setTimeout(() => document.getElementById('initOverlay').style.display = 'none', 700);
+                        }, 500);
+                        isFirstLoad = false;
+                    }
+                } else {
+                    throw new Error("Invalid format");
+                }
+            } catch (error) {
+                statusEl.innerHTML = `<i class="fa-solid fa-plug-circle-xmark text-[8px]"></i> OFFLINE`;
+                statusEl.className = "text-[10px] font-mono text-rose-400 bg-rose-900/40 px-2 py-1 rounded-md border border-rose-500/30 flex items-center gap-1.5";
+            }
+        }
+
+        /* ================= Data Processing ================= */
+        // ডাটার হেডারগুলো হলো: Time, User ID, Class, Year, Subjects, Result Mode, Auto Jump, Total Results
+        function processData(dataArray) {
+            if(!dataArray || dataArray.length === 0) return;
+
+            const currentTotal = dataArray.length;
+
+            if (currentTotal > previousTotal && !isFirstLoad) {
+                const newlyAddedCount = currentTotal - previousTotal;
+                const newlyAddedLogs = dataArray.slice(currentTotal - newlyAddedCount);
+                
+                newlyAddedLogs.forEach(log => appendToTerminal(log));
+                if (navigator.vibrate) navigator.vibrate([30, 50, 30]); // Haptic feedback for new data
+            }
+
+            // নতুন ডাটা সবার উপরে দেখানোর জন্য reverse করা হলো
+            globalLogs = [...dataArray].reverse();
+            
+            if(isFirstLoad) {
+                globalLogs.slice().reverse().forEach(log => appendToTerminal(log));
+            }
+
+            previousTotal = currentTotal;
+
+            buildIntelData();
+            updateDashboard();
+            renderAllLogs();
+            renderIntelList();
+        }
+
+       /* ================= Build User Relationships ================= */
+       function buildIntelData() {
+           intelDataMap = {};
+           
+           globalLogs.forEach(log => {
+               const uid = log['User ID'] || 'Unknown_Device';
+               
+               if(!intelDataMap[uid]) {
+                   intelDataMap[uid] = { 
+                       uid: uid, 
+                       sessions: [],
+                       lastActive: log['Time']
+                   };
+               }
+               intelDataMap[uid].sessions.push(log);
+           });
+       }
+
+        /* ================= Update Views ================= */
+        function updateDashboard() {
+            // 1. Total and Unique Users
+            document.getElementById('stat-total').innerText = globalLogs.length;
+            document.getElementById('stat-users').innerText = Object.keys(intelDataMap).length;
+
+            // 2. Today's Search Calculation
+            const todayDate = new Date();
+            let todayCount = 0;
+            globalLogs.forEach(log => {
+                const d = new Date(log['Time']);
+                if (!isNaN(d)) {
+                    if (d.getDate() === todayDate.getDate() &&
+                        d.getMonth() === todayDate.getMonth() &&
+                        d.getFullYear() === todayDate.getFullYear()) {
+                        todayCount++;
+                    }
+                }
+            });
+            document.getElementById('stat-today').innerText = todayCount;
+
+            const classCountMap = {};
+            const modeCountMap = {}; 
+            
+            globalLogs.forEach(log => {
+                // Class Counting
+                let cls = log['Class'] || 'N/A';
+                classCountMap[cls] = (classCountMap[cls] || 0) + 1;
+                
+                // Mode Counting
+                let mode = log['Result Mode'] || 'N/A';
+                modeCountMap[mode] = (modeCountMap[mode] || 0) + 1;
+            });
+
+            // Find Top Class 
+            let maxClass = '-';
+            let maxClassCount = 0;
+            for(let c in classCountMap) {
+                if(classCountMap[c] > maxClassCount) {
+                    maxClassCount = classCountMap[c];
+                    maxClass = c;
+                }
+            }
+            document.getElementById('stat-top-class').innerText = maxClass;
+
+            // 4. Update Bar Chart
+            updateChart(classCountMap);
+
+            // 5. Update Top Targets List (Showing Classes)
+            updateTopTargets(classCountMap);
+
+            // 6. Recent Activity Mini List 
+            const recentHTML = globalLogs.slice(0, 5).map(log => {
+                const clsName = log['Class'] || 'Manual';
+                const yr = log['Year'] || '-';
+                const mode = log['Result Mode'] || 'Normal';
+                const shortUid = (log['User ID'] || 'USR').substring(0, 6);
+                
+                const modeColor = mode.includes('Subject') ? 'text-purple-400' : 'text-emerald-400';
+               
+                return `
+                <div class="flex items-center gap-3 bg-slate-800/30 p-3 rounded-xl border border-slate-700/50 hover:bg-slate-800/50 transition-colors">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-900 to-blue-900 border border-cyan-700/50 flex items-center justify-center text-cyan-400 shadow-inner">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                        <div class="text-sm font-bold text-white truncate flex items-center gap-2">
+                            শ্রেণি: ${clsName} <span class="text-[10px] font-normal text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded">${yr}</span>
+                        </div>
+                        <div class="text-[10px] font-mono truncate mt-0.5">
+                            <span class="text-slate-400">ID: ${shortUid}...</span> 
+                            <span class="mx-1 text-slate-600">|</span> 
+                            <span class="${modeColor}">${mode}</span>
+                        </div>
+                    </div>
+                    <div class="text-[9px] text-slate-500 font-mono text-right whitespace-nowrap bg-slate-900/50 px-2 py-1 rounded border border-slate-800">
+                        ${timeAgo(log['Time'])}
+                    </div>
+                </div>
+               `;
+            }).join('');
+               
+            document.getElementById('recentActivityList').innerHTML = recentHTML;
+        }
+
+        // --- Handle Chart ---
+        function updateChart(classData) {
+            const ctx = document.getElementById('classBarChart').getContext('2d');
+            const labels = Object.keys(classData);
+            const data = Object.values(classData);
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+            gradient.addColorStop(0, 'rgba(0, 242, 254, 0.9)');
+            gradient.addColorStop(1, 'rgba(79, 172, 254, 0.1)');
+
+            if(dashboardChart) {
+                dashboardChart.data.labels = labels;
+                dashboardChart.data.datasets[0].data = data;
+                dashboardChart.update();
+            } else {
+                dashboardChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'মোট সেশন',
+                            data: data,
+                            backgroundColor: gradient,
+                            borderColor: '#00f2fe',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { 
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255,255,255,0.05)', drawBorder: false },
+                                ticks: { color: '#64748b', stepSize: 1, font: { family: "'JetBrains Mono', monospace", size: 10 } }
+                            },
+                            x: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: { color: '#94a3b8', font: { family: "'Hind Siliguri', sans-serif" } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // --- Handle Top Targets ---
+        function updateTopTargets(targetData) {
+            const sortedTargets = Object.entries(targetData).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+            if(sortedTargets.length === 0) {
+                document.getElementById('topTargetsList').innerHTML = '<div class="text-xs text-slate-500 text-center py-2 font-mono">No data available</div>';
+                return;
+            }
+
+            const html = sortedTargets.map((item, index) => {
+                const name = item[0];
+                const count = item[1];
+                
+                const medalColors = ['text-amber-400', 'text-slate-300', 'text-amber-600', 'text-slate-500', 'text-slate-500'];
+                const bgColors = ['bg-amber-500/10 border-amber-500/20', 'bg-slate-300/10 border-slate-300/20', 'bg-amber-600/10 border-amber-600/20', 'bg-slate-800 border-slate-700', 'bg-slate-800 border-slate-700'];
+                
+                return `
+                <div class="flex items-center justify-between p-3 rounded-xl border ${bgColors[index]} backdrop-blur-sm transition-all hover:scale-[1.01]">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <span class="font-bold font-mono ${medalColors[index]} w-5 text-center shrink-0">#${index + 1}</span>
+                        <span class="text-white font-bold text-sm truncate whitespace-nowrap">শ্রেণি: ${name}</span>
+                    </div>
+                    <div class="text-[10px] text-cyan-400 font-mono bg-cyan-950/50 px-2 py-1 rounded border border-cyan-900">
+                        ${count} SESSIONS
+                    </div>
+                </div>
+                `
+            }).join('');
+            
+            document.getElementById('topTargetsList').innerHTML = html;
+        }
+
+        /* ================= Real-time Terminal ================= */
+        function appendToTerminal(log) {
+            const term = document.getElementById('terminalBody');
+            const anchor = document.getElementById('termAnchor');
+            
+            const timeRaw = new Date(log['Time']);
+            const time = !isNaN(timeRaw) ? timeRaw.toLocaleTimeString('en-US', {hour12: false}) : '--:--:--';
+            const uid = (log['User ID'] || 'Unknown').substring(0, 8);
+            const cls = log['Class'] || 'Manual';
+            const mode = log['Result Mode'] || 'N/A';
+
+            const line = document.createElement('div');
+            line.className = 'terminal-line mb-1.5 break-words';
+            
+            line.innerHTML = `
+                <span class="text-slate-600">[${time}]</span> 
+                <span class="text-emerald-400">RCV:</span><span class="text-slate-300">${uid}</span> 
+                <span class="text-slate-500">>></span> 
+                <span class="text-cyan-400">CLS:</span><span class="text-white font-bold">${cls}</span> 
+                <span class="text-slate-500">|</span> 
+                <span class="text-purple-400">MODE:</span><span class="text-slate-300">${mode}</span>
+                <span class="text-emerald-500 ml-1">OK</span>
+            `;
+            
+            term.insertBefore(line, anchor);
+            
+            // Keep terminal clean (max 60 lines)
+            if(term.childElementCount > 60) {
+                term.removeChild(term.children[2]); 
+            }
+            
+            // Auto scroll to bottom
+            term.scrollTop = term.scrollHeight;
+        }
+
+        /* ================= Render All Logs Tab ================= */
+        function renderAllLogs() {
+            const html = globalLogs.map(log => {
+                const uidShort = (log['User ID'] || 'USR').substring(0, 8);
+                const isSubWise = (log['Result Mode'] || '').includes('Subject');
+                const badgeColor = isSubWise ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+
+                return `
+                <div class="glass-card p-4 flex flex-col gap-3">
+                    <div class="flex justify-between items-start border-b border-slate-700/50 pb-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-fingerprint text-cyan-600"></i>
+                            <span class="font-mono text-cyan-400 text-xs">${uidShort}...</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">${formatDateReadable(log['Time'])}</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-slate-900/50 p-2 rounded-lg border border-slate-800">
+                            <div class="text-slate-500 text-[9px] uppercase mb-0.5">Target Class</div>
+                            <div class="text-white font-bold">${log['Class']} <span class="text-slate-500 font-normal">(${log['Year']})</span></div>
+                        </div>
+                        <div class="bg-slate-900/50 p-2 rounded-lg border border-slate-800 flex flex-col justify-center">
+                            <div class="text-[10px] font-mono px-2 py-1 rounded text-center border ${badgeColor}">
+                                ${log['Result Mode']}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/50 p-2 rounded-lg border border-slate-800 text-xs">
+                        <div class="text-slate-500 text-[9px] uppercase mb-1">Selected Subjects</div>
+                        <div class="text-slate-300 leading-relaxed">${log['Subjects'] || 'N/A'}</div>
+                    </div>
+                </div>
+            `}).join('');
+            document.getElementById('allLogsList').innerHTML = html;
+        }
+
+        /* ================= User Intel Tab ================= */
+        function renderIntelList(searchTerm = "") {
+            const listEl = document.getElementById('intelList');
+            const users = Object.values(intelDataMap);
+            
+            document.getElementById('intelCount').innerText = `${users.length} Devices`;
+
+            const filtered = users.filter(u => 
+                u.uid.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            // Sort by most active
+            filtered.sort((a, b) => b.sessions.length - a.sessions.length);
+
+            const html = filtered.map(u => {
+                const shortUid = u.uid.substring(0, 10);
+                
+                return `
+                <div onclick="openIntelModal('${u.uid}')" class="glass-card p-4 flex items-center justify-between cursor-pointer hover:bg-slate-800/50 active:scale-[0.98] transition-all border border-slate-700/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center shadow-inner">
+                            <i class="fa-solid fa-mobile-screen-button text-slate-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-mono text-cyan-400 text-xs font-bold">${shortUid}...</div>
+                            <div class="text-[9px] text-slate-500 font-sans mt-0.5">Last active: ${timeAgo(u.lastActive)}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-xl font-black text-white font-mono">${u.sessions.length}</span>
+                        <span class="text-[8px] text-emerald-500 font-bold uppercase tracking-wider">Sessions</span>
+                    </div>
+                </div>
+            `}).join('');
+            
+            listEl.innerHTML = html;
+        }
+
+        document.getElementById('userSearch').addEventListener('input', (e) => {
+            renderIntelList(e.target.value);
+        });
+
+     /* ================= Intel Modal ================= */
+     let isIntelModalOpen = false; 
+     
+     function openIntelModal(uid) {
+         const user = intelDataMap[uid];
+         if(!user) return;
+         
+         document.getElementById('modalUserId').innerText = "DEVICE: " + user.uid.substring(0, 15) + "...";
+         
+         const targetsHTML = user.sessions.map(log => {
+             const modeColor = (log['Result Mode'] || '').includes('Subject') ? 'text-purple-400' : 'text-emerald-400';
+             
+             return `
+             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                 <div class="flex items-center justify-center w-6 h-6 rounded-full border-4 border-slate-900 bg-cyan-500 text-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ml-1.5">
+                     <i class="fa-solid fa-circle-dot text-[8px]"></i>
+                 </div>
+                 
+                 <div class="w-[calc(100%-2.5rem)] md:w-[calc(50%-2rem)] p-3 rounded-xl bg-slate-800/60 border border-slate-700/80 shadow-lg ml-4 md:ml-0 group-hover:border-cyan-500/50 transition-colors backdrop-blur-sm">
+                     <div class="flex items-center justify-between mb-2 border-b border-slate-700 pb-2">
+                         <div class="font-bold text-white text-sm flex items-center gap-1.5">
+                             <i class="fa-solid fa-folder-open text-cyan-500 text-xs"></i> 
+                             ${log['Class']} <span class="text-[10px] text-slate-400 font-normal">(${log['Year']})</span>
+                         </div>
+                         <div class="text-[9px] text-slate-400 font-mono">${timeAgo(log['Time'])}</div>
+                     </div>
+                     <div class="flex justify-between items-end">
+                        <div class="text-[10px] text-slate-300 font-mono line-clamp-1 flex-1 pr-2" title="${log['Subjects']}">${log['Subjects']}</div>
+                        <div class="text-[9px] ${modeColor} font-bold font-mono bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700 shrink-0">${log['Result Mode']}</div>
+                     </div>
+                 </div>
+             </div>
+             `
+         }).join('');
+         
+         document.getElementById('modalTargetsList').innerHTML = targetsHTML;
+         
+         const modal = document.getElementById('intelModal');
+         const content = document.getElementById('intelModalContent');
+         
+         modal.classList.remove('hidden');
+         setTimeout(() => {
+             modal.classList.remove('opacity-0');
+             content.classList.remove('translate-y-full');
+         }, 10);
+         
+         history.pushState({ modal: 'intel' }, '', '#device-history');
+         isIntelModalOpen = true;
+     }
+     
+     function closeIntelModal() {
+         const modal = document.getElementById('intelModal');
+         const content = document.getElementById('intelModalContent');
+         
+         modal.classList.add('opacity-0');
+         content.classList.add('translate-y-full');
+         
+         setTimeout(() => {
+            modal.classList.add('hidden');
+         }, 300);
+         
+         isIntelModalOpen = false;
+         if (window.location.hash === '#device-history') {
+            history.back(); 
+         }
+     }
+     
+     // --- Event Listeners ---
+     window.addEventListener('popstate', () => {
+         if (isIntelModalOpen) {
+             isIntelModalOpen = false;
+             const modal = document.getElementById('intelModal');
+             const content = document.getElementById('intelModalContent');
+             
+             modal.classList.add('opacity-0');
+             content.classList.add('translate-y-full');
+             setTimeout(() => { modal.classList.add('hidden'); }, 300);
+         }
+     });
+     
+     document.getElementById('intelModal').addEventListener('click', (e) => {
+         if (e.target.id === 'intelModal') closeIntelModal();
+     });
+     
+        /* ================= Navigation System ================= */
+        function switchTab(tabId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+
+            ['dashboard', 'terminal', 'intel', 'logs'].forEach(view => {
+                const el = document.getElementById(`view-${view}`);
+                el.classList.add('hidden');
+                el.style.animation = 'none';
+                el.offsetHeight; 
+                el.style.animation = null; 
+            });
+
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            document.getElementById('mainScrollArea').scrollTop = 0;
+            if(navigator.vibrate) navigator.vibrate(20); // Light tap feel
+        }
+
+    </script>
+</body>
+</html>
+
